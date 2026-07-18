@@ -2,6 +2,11 @@
 
 
 ## Todo:
+ops: maybe update postgres to 17 or 18
+ops: maybe migrate to npm or pnpm over yarn?
+
+
+
 init database with sql
 show index on start
 

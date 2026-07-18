@@ -6,6 +6,7 @@ import './index.css'
 import NavBar from './components/NavBar.tsx'
 
 
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>

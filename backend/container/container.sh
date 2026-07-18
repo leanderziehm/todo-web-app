@@ -1,0 +1,1 @@
+podman build -t api-texts . && podman run --rm -p 4000:4000 --env-file .env api-texts

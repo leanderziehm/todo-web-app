@@ -1,0 +1,27 @@
+services:
+  # === FastAPI Backend ===
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Containerfile
+    container_name: backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "4000:4000"
+
+  # === React Frontend (Vite build → Nginx serve) ===
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Containerfile
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "4001:80"
+    depends_on:
+      - backend
+    environment:
+      API_URL: http://backend:4000
+

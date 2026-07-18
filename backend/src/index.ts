@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
@@ -6,12 +5,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 import autoload from "@fastify/autoload";
 import cors from '@fastify/cors'
-// import fastifyStatic from "@fastify/static";
+import {validateEnv} from "./env.js";
 
 const version = "0.0.4";
 
-dotenv.config();
 
+validateEnv();
 
 // const envToLogger:any = {
 //   development: {
@@ -93,7 +92,7 @@ app.get("/", async (request, reply) => {
 // }
 
 app
-  .listen({ port: 4000, host: "127.0.0.1" })
+  .listen({ port: 4000, host: "0.0.0.0" })
   .then(() => 1)
   .catch((err) => {
     // console.error(err);
