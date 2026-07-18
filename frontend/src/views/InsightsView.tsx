@@ -23,7 +23,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  TimeScale
+  TimeScale,
 );
 
 function getRangeStart(preset: string): Date | null {
@@ -57,18 +57,14 @@ export default function InsightsView() {
   const [chartData, setChartData] = useState({});
 
   useEffect(() => {
-    fetchTexts(1000)
-      .then(setAll)
-      .catch(console.error);
+    fetchTexts(1000).then(setAll).catch(console.error);
   }, []);
 
   const filteredData = useMemo(() => {
     const start = getRangeStart(rangePreset);
     if (!start) return all;
 
-    return all.filter(
-      (item) => new Date(item.timestamp) >= start
-    );
+    return all.filter((item) => new Date(item.timestamp) >= start);
   }, [all, rangePreset]);
 
   useEffect(() => {
@@ -125,7 +121,10 @@ export default function InsightsView() {
       <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
         <div>
           <label>Aggregate by:</label>
-          <select value={interval} onChange={(e) => setInterval(e.target.value)}>
+          <select
+            value={interval}
+            onChange={(e) => setInterval(e.target.value)}
+          >
             <option value="hour">Hour</option>
             <option value="day">Day</option>
             <option value="week">Week</option>

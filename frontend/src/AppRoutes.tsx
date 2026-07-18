@@ -1,5 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
-import { appRoutes } from './routes';
+import { Routes, Route } from "react-router-dom";
+import { appRoutes } from "./routes";
 
 export function AppRoutes() {
   return (

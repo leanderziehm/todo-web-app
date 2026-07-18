@@ -10,7 +10,7 @@ async function handleShare(event) {
   const formData = await event.request.formData();
 
   const payload_text = `stash(share): title=${formData.get(
-    "title"
+    "title",
   )} text=${formData.get("text")} url=${formData.get("url")}`;
 
   const payload = {
@@ -32,7 +32,7 @@ async function handleShare(event) {
     `<html><body><script>
       window.close(); // optionally try to close tab if it's a new window
     </script></body></html>`,
-    { headers: { "Content-Type": "text/html" } }
+    { headers: { "Content-Type": "text/html" } },
   );
 
   // Return a blank response; nothing else happens

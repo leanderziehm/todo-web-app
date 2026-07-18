@@ -8,6 +8,7 @@
     "build": "vite build && bash ./build/add_api_url.sh",
     "dev": "vite",
     "lint": "eslint .",
+    "format": "prettier --write .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "prettier": "^3.9.5",
     "sass": "^1.96.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.3",

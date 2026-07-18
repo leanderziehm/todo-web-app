@@ -26,22 +26,20 @@ export default function FilterView() {
   //   )
   // );
 
+  // Build counts per type
+  const typeCounts = all.reduce((acc, item) => {
+    const match = item.text.match(/^(\w+)(\(.+\))?:/);
+    if (!match) return acc;
 
-// Build counts per type
-const typeCounts = all.reduce((acc, item) => {
-  const match = item.text.match(/^(\w+)(\(.+\))?:/);
-  if (!match) return acc;
+    const type = match[1];
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {});
 
-  const type = match[1];
-  acc[type] = (acc[type] || 0) + 1;
-  return acc;
-}, {});
-
-// Sort descending by count and format as "type (count)"
-const types = Object.entries(typeCounts)
-  .sort((a, b) => b[1] - a[1])
-  .map(([type, count]) => `${type} (${count})`);
-
+  // Sort descending by count and format as "type (count)"
+  const types = Object.entries(typeCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([type, count]) => `${type} (${count})`);
 
   // Filter whenever typeFilter or search changes
   useEffect(() => {
@@ -56,7 +54,7 @@ const types = Object.entries(typeCounts)
 
     if (search) {
       temp = temp.filter((item) =>
-        item.text.toLowerCase().includes(search.toLowerCase())
+        item.text.toLowerCase().includes(search.toLowerCase()),
       );
     }
 

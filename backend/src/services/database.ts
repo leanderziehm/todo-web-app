@@ -1,9 +1,9 @@
 import pg from "pg";
-import {Texts} from "../routes/texts.route.js"
+import { Texts } from "../routes/texts.route.js";
 
 let client = null;
 
-export default async function getDatabaseClient(){
+export default async function getDatabaseClient() {
   try {
     client = new pg.Client({
       host: process.env.POSTGRES_HOST,
@@ -16,7 +16,7 @@ export default async function getDatabaseClient(){
       const sql = Texts.get_ensure_table_texts_sql();
       await client.query(sql);
     } catch (error) {
-      console.log("ERROR for get_ensure_table_texts_sql:",error)
+      console.log("ERROR for get_ensure_table_texts_sql:", error);
       return client;
     }
 

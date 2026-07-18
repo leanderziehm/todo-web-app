@@ -22,7 +22,9 @@ button:hover {
   background-color: #1e40af;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   padding: 0.4rem;
   border: 1px solid #ccc;
   border-radius: 4px;

@@ -27,11 +27,9 @@ export default function TodoChat() {
           result
             .map((item) => {
               const index = item.text.indexOf(":");
-              return index !== -1
-                ? item.text.substring(0, index)
-                : null;
+              return index !== -1 ? item.text.substring(0, index) : null;
             })
-            .filter(Boolean)
+            .filter(Boolean),
         ),
       ];
 
@@ -40,7 +38,6 @@ export default function TodoChat() {
       if (!currentTopic && extractedTopics.length > 0) {
         setCurrentTopic(extractedTopics[0]);
       }
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -48,14 +45,12 @@ export default function TodoChat() {
     }
   }
 
-
   function createTopic() {
     const newTopic = `topic${Date.now()}`;
 
     setTopics((prev) => [...prev, newTopic]);
     setCurrentTopic(newTopic);
   }
-
 
   function getMessagesForTopic() {
     if (!currentTopic) return [];
@@ -66,12 +61,8 @@ export default function TodoChat() {
         ...item,
         text: item.text.substring(currentTopic.length + 1),
       }))
-      .sort(
-        (a, b) =>
-          new Date(a.timestamp) - new Date(b.timestamp)
-      );
+      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
   }
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -79,7 +70,6 @@ export default function TodoChat() {
     const trimmed = inputValue.trim();
 
     if (!trimmed || !currentTopic) return;
-
 
     const tempId = `temp-${Date.now()}`;
 
@@ -89,7 +79,6 @@ export default function TodoChat() {
       text: trimmed,
       pending: true,
     };
-
 
     setAllTexts((prev) => [
       {
@@ -101,28 +90,21 @@ export default function TodoChat() {
 
     setInputValue("");
 
-
     try {
       await insertText(`${currentTopic}:${trimmed}`);
 
       await loadTexts();
-
     } catch (err) {
-      setAllTexts((prev) =>
-        prev.filter((item) => item.id !== tempId)
-      );
+      setAllTexts((prev) => prev.filter((item) => item.id !== tempId));
 
       setError(err.message);
     }
   }
 
-
   const messages = getMessagesForTopic();
-
 
   return (
     <div style={{ display: "flex", gap: "30px" }}>
-
       <aside
         style={{
           width: "200px",
@@ -130,7 +112,6 @@ export default function TodoChat() {
           paddingRight: "20px",
         }}
       >
-
         <button
           onClick={createTopic}
           style={{
@@ -142,7 +123,6 @@ export default function TodoChat() {
           +
         </button>
 
-
         {topics.map((topic) => (
           <button
             key={topic}
@@ -151,27 +131,16 @@ export default function TodoChat() {
               display: "block",
               width: "100%",
               marginBottom: "5px",
-              fontWeight:
-                currentTopic === topic
-                  ? "bold"
-                  : "normal",
+              fontWeight: currentTopic === topic ? "bold" : "normal",
             }}
           >
             {topic}
           </button>
         ))}
-
       </aside>
 
-
       <main style={{ flex: 1 }}>
-
-        <h3>
-          {currentTopic
-            ? currentTopic
-            : "Create a topic"}
-        </h3>
-
+        <h3>{currentTopic ? currentTopic : "Create a topic"}</h3>
 
         <form
           onSubmit={handleSubmit}
@@ -179,7 +148,6 @@ export default function TodoChat() {
             marginBottom: "30px",
           }}
         >
-
           <input
             autoFocus
             disabled={!currentTopic}
@@ -188,34 +156,20 @@ export default function TodoChat() {
               height: "2rem",
             }}
             value={inputValue}
-            onChange={(e) =>
-              setInputValue(e.target.value)
-            }
+            onChange={(e) => setInputValue(e.target.value)}
           />
 
-          <button
-            type="submit"
-            disabled={!currentTopic}
-          >
+          <button type="submit" disabled={!currentTopic}>
             Send
           </button>
-
         </form>
-
 
         {loading && <p>Loading...</p>}
 
-        {error && (
-          <p style={{ color: "red" }}>
-            {error}
-          </p>
-        )}
-
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <ul style={{ listStyle: "none", padding: 0 }}>
-
           {messages.map((msg) => (
-
             <li
               key={msg.id}
               style={{
@@ -223,25 +177,13 @@ export default function TodoChat() {
                 marginBottom: "15px",
               }}
             >
+              <div>{msg.text}</div>
 
-              <div>
-                {msg.text}
-              </div>
-
-              <small>
-                {new Date(
-                  msg.timestamp
-                ).toLocaleString()}
-              </small>
-
+              <small>{new Date(msg.timestamp).toLocaleString()}</small>
             </li>
-
           ))}
-
         </ul>
-
       </main>
-
     </div>
   );
 }

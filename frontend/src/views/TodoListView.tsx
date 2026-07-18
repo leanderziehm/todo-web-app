@@ -22,7 +22,9 @@ export default function TodoList() {
         const confirmedTexts = result.map((t) => t.text);
 
         // Keep only pending items that are not yet confirmed
-        const unresolvedPending = pending.filter((t) => !confirmedTexts.includes(t.text));
+        const unresolvedPending = pending.filter(
+          (t) => !confirmedTexts.includes(t.text),
+        );
 
         return [...unresolvedPending, ...result];
       });
@@ -57,7 +59,10 @@ export default function TodoList() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} style={{ marginTop: "50px", marginBottom: "50px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ marginTop: "50px", marginBottom: "50px" }}
+      >
         <input
           autoFocus
           style={{ width: "600px", height: "2rem" }}

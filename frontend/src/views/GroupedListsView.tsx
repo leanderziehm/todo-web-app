@@ -34,7 +34,7 @@ export default function GroupedListsView() {
 
     if (search) {
       items = items.filter((item) =>
-        item.text.toLowerCase().includes(search.toLowerCase())
+        item.text.toLowerCase().includes(search.toLowerCase()),
       );
     }
 

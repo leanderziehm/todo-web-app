@@ -4,11 +4,10 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import path from "path";
 import { fileURLToPath } from "url";
 import autoload from "@fastify/autoload";
-import cors from '@fastify/cors'
-import {validateEnv} from "./env.js";
+import cors from "@fastify/cors";
+import { validateEnv } from "./env.js";
 
 const version = "0.0.4";
-
 
 validateEnv();
 
@@ -27,24 +26,23 @@ validateEnv();
 // }
 
 // const app = fastify.fastify({ logger: envToLogger["development"] ?? true  });
-const app = fastify.fastify({ logger: true  });
+const app = fastify.fastify({ logger: true });
 
 await app.register(cors, {
-   origin: true
-})
-
+  origin: true,
+});
 
 process.on("uncaughtException", (err: Error) => {
-  app.log.error(`Uncaught Exception: ${err}` );
+  app.log.error(`Uncaught Exception: ${err}`);
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-   app.log.error(`Unhandled Rejection at: ${promise}  reason: ${reason}` );
+  app.log.error(`Unhandled Rejection at: ${promise}  reason: ${reason}`);
 });
 // Global error handler
 app.setErrorHandler((error, request, reply) => {
   // Log the error
-  app.log.error(`Global error handler: ${error}` );
+  app.log.error(`Global error handler: ${error}`);
 
   // Send a generic response to the client
   reply.status(500).send({ error: "Internal Server Error" });
@@ -77,11 +75,11 @@ app.register(autoload, {
 });
 
 app.get("/", async (request, reply) => {
-  reply.redirect("/docs",302);
+  reply.redirect("/docs", 302);
 });
 
 // app.get("/favicon.ico", async () => {
-//   return ``; // host static file image.png from public 
+//   return ``; // host static file image.png from public
 // });
 
 // export default async function (app) {
@@ -91,9 +89,7 @@ app.get("/", async (request, reply) => {
 //   });
 // }
 
-
 ////
-
 
 // app
 //   .listen({ port: 4000, host: "0.0.0.0" })
@@ -104,8 +100,6 @@ app.get("/", async (request, reply) => {
 
 //     process.exit(1);
 //   });
-
-
 
 const start = async () => {
   try {

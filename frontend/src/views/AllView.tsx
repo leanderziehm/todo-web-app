@@ -12,8 +12,24 @@ export default function View() {
   }, []);
 
   // return <>{JSON.stringify(all)}</>;
-  return <>{<table><tr><th>id</th> <th>text</th> <th>date_utc</th> </tr>
-  {all.map((m) => { return <tr><td>{m.id}</td><td>{m.text}</td><td>{m.timestamp}</td></tr> })}
-
-  </table>}</>;
+  return (
+    <>
+      {
+        <table>
+          <tr>
+            <th>id</th> <th>text</th> <th>date_utc</th>{" "}
+          </tr>
+          {all.map((m) => {
+            return (
+              <tr>
+                <td>{m.id}</td>
+                <td>{m.text}</td>
+                <td>{m.timestamp}</td>
+              </tr>
+            );
+          })}
+        </table>
+      }
+    </>
+  );
 }
