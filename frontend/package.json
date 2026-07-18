@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite build && vite preview",
+    "start": "npm run build && vite preview",
+    "build": "vite build && bash ./build/add_api_url.sh",
     "dev": "vite",
-    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
