@@ -35,7 +35,7 @@ jobs:
       - name: Build Vite app
         working-directory: frontend
         env:
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          # VITE_BASE_PATH: /${{ github.event.repository.name }}/
           API_URL: ${{ vars.API_URL }}
         run: npm run build
 
