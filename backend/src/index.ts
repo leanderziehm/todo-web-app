@@ -91,12 +91,46 @@ app.get("/", async (request, reply) => {
 //   });
 // }
 
-app
-  .listen({ port: 4000, host: "0.0.0.0" })
-  .then(() => 1)
-  .catch((err) => {
-    // console.error(err);
-      app.log.error(`Error: ${err}` );
 
+////
+
+
+// app
+//   .listen({ port: 4000, host: "0.0.0.0" })
+//   .then(() => 1)
+//   .catch((err) => {
+//     // console.error(err);
+//       app.log.error(`Error: ${err}` );
+
+//     process.exit(1);
+//   });
+
+
+
+const start = async () => {
+  try {
+    await app.listen({ port: 4000, host: "0.0.0.0" });
+    app.log.info("Server started");
+  } catch (err) {
+    app.log.error(err);
     process.exit(1);
-  });
+  }
+};
+
+const shutdown = async (signal: string) => {
+  app.log.info(`${signal} received, shutting down`);
+
+  try {
+    await app.close();
+    app.log.info("Fastify closed successfully");
+    process.exit(0);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
+
+await start();
