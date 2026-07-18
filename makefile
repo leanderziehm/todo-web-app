@@ -1,21 +1,21 @@
-13 podman_compose:
+13 pc cc podman_compose:
 	podman compose up --build
 
-11 podman_backend:
+11 pb cb podman_backend:
 	cd backend && podman build -t todo-backend . && podman run -p 4000:4000 --env-file .env todo-backend
 
-12 podman_frontend:
+12 pf cf podman_frontend:
 	cd frontend && podman build -t todo-frontend . && podman run -p 4001:80 -e API_URL=http://127.0.0.1:4000 todo-frontend
 
 
-1 run_backend:
+1 b run_backend:
 	cd backend && \
 	if [ ! -d "node_modules" ]; then \
 		npm i; \
 	fi && \
 	npm run start
 
-2 run_frontend:
+2 f run_frontend:
 	cd frontend && \
 	if [ ! -d "node_modules" ]; then \
 		npm i; \

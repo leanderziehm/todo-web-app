@@ -6,6 +6,7 @@ import GroupedListsView from './views/GroupedListsView';
 // import PromptsView from './views/PromptsView';
 // import ExcalidrawView from './views/ExcalidrawView';
 import FilterView from './views/FilterView';
+import ChatView from './views/ChatView';
 import InsightsView from './views/InsightsView';
 
 export const appRoutes = [
@@ -14,6 +15,7 @@ export const appRoutes = [
     
    { path: '/lists', label: 'Grouped Lists', element: <GroupedListsView /> },
   { path: '/filter', label: 'Filter', element: <FilterView /> },
+  { path: '/chat', label: 'Chat', element: <ChatView /> },
      
   { path: '/insights', label: 'Insights', element: <InsightsView /> },
   // { path: '/prompts', label: 'Prompts', element: <PromptsView /> },

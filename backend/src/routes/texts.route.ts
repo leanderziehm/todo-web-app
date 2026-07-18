@@ -1,13 +1,10 @@
-// @ts-nocheck
 import {
   type FastifyInstance,
   type FastifyRequest,
   type FastifyReply,
   type FastifySchema,
 } from "fastify";
-
-import getDatabaseClient  from "../services/database.js";
-
+import getDatabaseClient from "../services/database.js";
 export default async function (app: FastifyInstance) {
   const schema: FastifySchema = {
     querystring: {
@@ -29,14 +26,12 @@ export default async function (app: FastifyInstance) {
         page?: number;
       };
       const results = await get_texts(true, per_page, page);
-      return results; // No need for JSON.stringify; Fastify handles it
-    }
+      return results;
+    },
   );
-
   interface TextBody {
     text: string;
   }
-
   const bodyJsonSchemaForText = {
     type: "object",
     required: ["text"],
@@ -44,43 +39,34 @@ export default async function (app: FastifyInstance) {
       text: { type: "string" },
     },
   };
-
   const postSchema: FastifySchema = {
     body: bodyJsonSchemaForText,
   };
-
   app.post<{ Body: TextBody }>(
     "/texts",
     { schema: postSchema },
     async (request, reply) => {
       const { text } = request.body;
       const results = await insert_into_texts(text);
-      return results; // Fastify automatically serializes to JSON
-    }
+      return results;
+    },
   );
 }
-
 export class Texts {
   static get_select_all_texts_sql() {
     return `SELECT * FROM texts;`;
   }
-  // static get_select_texts_sql(descending = true, limit = 5) {
-    // const sortBy = descending ? "DESC" : "ASC";
-    // return `SELECT * FROM texts ORDER BY timestamp ${sortBy} LIMIT ${limit};`;
-  // }
-    static get_select_texts_sql(descending = true) {
+  static get_select_texts_sql(descending = true) {
     const sortBy = descending ? "DESC" : "ASC";
     return `SELECT * FROM texts ORDER BY timestamp ${sortBy} LIMIT $1;`;
   }
-
-  static get_insert_texts_sql(text) {
+  static get_insert_texts_sql() {
     return `INSERT INTO texts 
                         (text)
                  VALUES ($1)
                 RETURNING *;
                 `;
   }
-
   static get_ensure_table_texts_sql() {
     return `CREATE TABLE IF NOT EXISTS texts
           (
@@ -90,22 +76,14 @@ export class Texts {
           );`;
   }
 }
-
-
 export async function get_texts(descending = true, limit = 5, page = 0) {
   let client = await getDatabaseClient();
   if (client !== null) {
     try {
       console.log("page:", page);
       const sql = Texts.get_select_texts_sql(descending);
-
-      // descending, limit)
-      // descending = true, limit = 5
-      //todo make this parametrized.
-   
-      console.log(sql,[limit]);
-      const result = await client.query(sql,[limit]);
-      // console.log(result.rows[0].message);
+      console.log(sql, [limit]);
+      const result = await client.query(sql, [limit]);
       console.log(result);
       return result.rows;
     } catch (err) {
@@ -118,15 +96,13 @@ export async function get_texts(descending = true, limit = 5, page = 0) {
     return "Client is null";
   }
 }
-
 export async function insert_into_texts(text) {
   let client = await getDatabaseClient();
   if (client !== null) {
     try {
       const sql = Texts.get_insert_texts_sql();
       console.log(sql);
-      const result = await client.query(sql,[text]);
-      // console.log(result.rows[0].message);
+      const result = await client.query(sql, [text]);
       console.log(result);
       return result.rows;
     } catch (err) {

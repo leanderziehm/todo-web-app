@@ -20,7 +20,7 @@ ENV TSC_COMPILE_ON_ERROR=true
 RUN npm run build
 
 # ---------- Stage 2: Nginx ----------
-FROM docker.io/library/nginx:trixie-perl
+FROM docker.io/library/nginx:mainline-slim
 WORKDIR /usr/share/nginx/html
 
 # Remove default nginx static files

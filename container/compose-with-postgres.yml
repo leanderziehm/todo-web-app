@@ -29,7 +29,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8000:8000"
+      - "4000:4000"
 
   # === React Frontend (Vite build → Nginx serve) ===
   frontend:
@@ -39,11 +39,11 @@ services:
     container_name: frontend
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "4001:80"
     depends_on:
       - backend
     environment:
-      API_URL: http://127.0.0.1:8000
+      API_URL: http://127.0.0.1:4000
 
 volumes:
   pgdata:
